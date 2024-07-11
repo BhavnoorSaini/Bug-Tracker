@@ -33,7 +33,7 @@ function Form({ route, method }) {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="form-container">
             <input
                 className="form-input"
                 type="text"
@@ -51,13 +51,13 @@ function Form({ route, method }) {
             {method !== "login" && method !== "register" && (
                 <input
                     className="form-input"
-                    type="number"
+                    type="text"
                     value={priority}
                     onChange={(e) => setPriority(e.target.value)}
                     placeholder="Priority"
                 />
             )}
-            <button type="submit" disabled={loading}>
+            <button type="submit" className="form-button">
                 {loading ? <LoadingIndicator /> : "Submit"}
             </button>
         </form>
