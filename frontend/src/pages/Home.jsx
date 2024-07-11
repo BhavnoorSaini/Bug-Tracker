@@ -1,47 +1,47 @@
 import { useState, useEffect } from "react";
 import api from "../api";
-import Note from "../components/Note"
+import Bug from "../components/Bug"
 import "../styles/Home.css"
 
 function Home() {
-    const [notes, setNotes] = useState([]);
+    const [bugs, setBugs] = useState([]);
     const [content, setContent] = useState("");
     const [title, setTitle] = useState("");
 
     useEffect(() => {
-        getNotes();
+        getBugs();
     }, []);
 
-    const getNotes = () => {
+    const getBugs = () => {
         api
-            .get("/api/notes/")
+            .get("/api/bugs/")
             .then((res) => res.data)
             .then((data) => {
-                setNotes(data);
+                setBugs(data);
                 console.log(data);
             })
             .catch((err) => alert(err));
     };
 
-    const deleteNote = (id) => {
+    const deleteBug = (id) => {
         api
-            .delete(`/api/notes/delete/${id}/`)
+            .delete(`/api/bugs/delete/${id}/`)
             .then((res) => {
-                if (res.status === 204) alert("Note deleted!");
-                else alert("Failed to delete note.");
-                getNotes();
+                if (res.status === 204) alert("Bug deleted!");
+                else alert("Failed to delete bug.");
+                getBugs();
             })
             .catch((error) => alert(error));
     };
 
-    const createNote = (e) => {
+    const createBug = (e) => {
         e.preventDefault();
         api
-            .post("/api/notes/", { content, title })
+            .post("/api/bugs/", { content, title })
             .then((res) => {
-                if (res.status === 201) alert("Note created!");
-                else alert("Failed to make note.");
-                getNotes();
+                if (res.status === 201) alert("Bug created!");
+                else alert("Failed to make bug.");
+                getBugs();
             })
             .catch((err) => alert(err));
     };
@@ -49,13 +49,13 @@ function Home() {
     return (
         <div>
             <div>
-                <h2>Notes</h2>
-                {notes.map((note) => (
-                    <Note note={note} onDelete={deleteNote} key={note.id} />
+                <h2>Bug Tracker</h2>
+                {bugs.map((bug) => (
+                    <Bug bug={bug} onDelete={deleteBug} key={bug.id} />
                 ))}
             </div>
-            <h2>Create a Note</h2>
-            <form onSubmit={createNote}>
+            <h2>Create a Bug</h2>
+            <form onSubmit={createBug}>
                 <label htmlFor="title">Title:</label>
                 <br />
                 <input
