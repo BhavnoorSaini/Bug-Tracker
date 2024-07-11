@@ -49,6 +49,10 @@ function Home() {
 
     return (
         <div>
+            <div className="center-container">
+             <h2>Bug Tracker</h2>
+            </div>
+            <h2 className="center-container">Create a Ticket</h2>
             <form onSubmit={createBug}>
                 <label htmlFor="title">Title</label>
                 <input
