@@ -60,6 +60,23 @@ function Form({ route, method }) {
             <button type="submit" className="form-button">
                 {loading ? <LoadingIndicator /> : "Submit"}
             </button>
+            {method === "login" ? (
+                <button
+                    type="button"
+                    className="form-button"
+                    onClick={() => navigate("/register")}
+                >
+                    Register Instead
+                </button>
+            ) : (
+                <button
+                    type="button"
+                    className="form-button"
+                    onClick={() => navigate("/login")}
+                >
+                    Login Instead
+                </button>
+            )}
         </form>
     );
 }

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import api from "../api";
 import Bug from "../components/Bug";
 import "../styles/Home.css";
+import Form from "../components/Form";
 
 function Home() {
     const [bugs, setBugs] = useState([]);
