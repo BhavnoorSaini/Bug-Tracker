@@ -18,5 +18,5 @@ class UserSerializer(serializers.ModelSerializer):
 class BugSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bug
-        fields = ["id", "title", "content", "created_at", "author"]
+        fields = ["id", "title", "content", "created_at", "author", "priority"]
         extra_kwargs = {"author": {"read_only": True}}

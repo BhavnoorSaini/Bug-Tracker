@@ -2,40 +2,38 @@ import { useState } from "react";
 import api from "../api";
 import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
-import "../styles/Form.css"
+import "../styles/Form.css";
 import LoadingIndicator from "./LoadingIndicator";
 
 function Form({ route, method }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [priority, setPriority] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    const name = method === "login" ? "Login" : "Register";
-
     const handleSubmit = async (e) => {
-        setLoading(true);
         e.preventDefault();
-
+        setLoading(true);
         try {
-            const res = await api.post(route, { username, password })
-            if (method === "login") {
-                localStorage.setItem(ACCESS_TOKEN, res.data.access);
-                localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-                navigate("/")
-            } else {
-                navigate("/login")
-            }
+            const response = await api.post(route, {
+                username,
+                password,
+                priority: method !== "login" && method !== "register" ? priority : undefined,
+            });
+            console.log(response.data); // Log the response data for debugging
+            localStorage.setItem(ACCESS_TOKEN, response.data.access);
+            localStorage.setItem(REFRESH_TOKEN, response.data.refresh);
+            navigate("/"); // Redirect to the dashboard or another page
         } catch (error) {
-            alert(error)
+            console.error("Login failed:", error);
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit} className="form-container">
-            <h1>{name}</h1>
+        <form onSubmit={handleSubmit}>
             <input
                 className="form-input"
                 type="text"
@@ -50,12 +48,20 @@ function Form({ route, method }) {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
             />
-            {loading && <LoadingIndicator />}
-            <button className="form-button" type="submit">
-                {name}
+            {method !== "login" && method !== "register" && (
+                <input
+                    className="form-input"
+                    type="number"
+                    value={priority}
+                    onChange={(e) => setPriority(e.target.value)}
+                    placeholder="Priority"
+                />
+            )}
+            <button type="submit" disabled={loading}>
+                {loading ? <LoadingIndicator /> : "Submit"}
             </button>
         </form>
     );
 }
 
-export default Form
+export default Form;

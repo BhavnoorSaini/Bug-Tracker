@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import api from "../api";
-import Bug from "../components/Bug"
-import "../styles/Home.css"
+import Bug from "../components/Bug";
+import "../styles/Home.css";
 
 function Home() {
     const [bugs, setBugs] = useState([]);
     const [content, setContent] = useState("");
     const [title, setTitle] = useState("");
+    const [priority, setPriority] = useState("medium");
 
     useEffect(() => {
         getBugs();
@@ -37,47 +38,49 @@ function Home() {
     const createBug = (e) => {
         e.preventDefault();
         api
-            .post("/api/bugs/", { content, title })
+            .post("/api/bugs/", { content, title, priority })
             .then((res) => {
                 if (res.status === 201) alert("Bug created!");
                 else alert("Failed to make bug.");
                 getBugs();
             })
-            .catch((err) => alert(err));
+            .catch((error) => alert(error));
     };
 
     return (
         <div>
-            <div>
-                <h2>Bug Tracker</h2>
-                {bugs.map((bug) => (
-                    <Bug bug={bug} onDelete={deleteBug} key={bug.id} />
-                ))}
-            </div>
-            <h2>Create a Bug</h2>
             <form onSubmit={createBug}>
-                <label htmlFor="title">Title:</label>
-                <br />
+                <label htmlFor="title">Title</label>
                 <input
                     type="text"
                     id="title"
-                    name="title"
-                    required
-                    onChange={(e) => setTitle(e.target.value)}
                     value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                 />
-                <label htmlFor="content">Content:</label>
-                <br />
+                <label htmlFor="content">Content</label>
                 <textarea
                     id="content"
-                    name="content"
-                    required
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
                 ></textarea>
+                <label htmlFor="priority">Priority</label>
+                <select
+                    id="priority"
+                    value={priority}
+                    onChange={(e) => setPriority(e.target.value)}
+                >
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
                 <br />
-                <input type="submit" value="Submit"></input>
+                <input type="submit" value="Submit" />
             </form>
+            <div>
+                {bugs.map((bug) => (
+                    <Bug key={bug.id} bug={bug} onDelete={deleteBug} />
+                ))}
+            </div>
         </div>
     );
 }
