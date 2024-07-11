@@ -3,16 +3,23 @@ import api from "../api";
 import Bug from "../components/Bug";
 import "../styles/Home.css";
 import Form from "../components/Form";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
     const [bugs, setBugs] = useState([]);
     const [content, setContent] = useState("");
     const [title, setTitle] = useState("");
     const [priority, setPriority] = useState("medium");
+    const navigate = useNavigate();
 
     useEffect(() => {
         getBugs();
     }, []);
+
+    const handleLogout = () => {
+        localStorage.clear();
+        navigate("/login");
+    };
 
     const getBugs = () => {
         api
@@ -86,6 +93,7 @@ function Home() {
                     <Bug key={bug.id} bug={bug} onDelete={deleteBug} />
                 ))}
             </div>
+            <button onClick={handleLogout}>Logout</button>
         </div>
     );
 }
