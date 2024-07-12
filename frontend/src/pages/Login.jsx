@@ -8,10 +8,8 @@ function Login() {
             <header className="header">
                 <h1>Bug Tracker</h1>
             </header>
-            <div className="form-container">
-                <h2>Login</h2>
+                <label htmlFor="login" className="title-label">Login</label>
                 <Form route="/api/token/" method="login" />
-            </div>
             <footer className="footer">
                 <p>&copy; 2024 Bug Tracker</p>
             </footer>
