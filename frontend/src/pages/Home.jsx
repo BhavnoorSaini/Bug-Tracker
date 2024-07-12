@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import api from "../api";
 import Ticket from "../components/Ticket";
 import "../styles/Home.css";
-import Form from "../components/Form";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
@@ -48,9 +47,15 @@ function Home() {
         api
             .post("/api/tickets/", { content, title, priority })
             .then((res) => {
-                if (res.status === 201) alert("Ticket created!");
-                else alert("Failed to make ticket.");
-                getTickets();
+                if (res.status === 201) {
+                    alert("Ticket created!");
+                    setTitle(""); // Clear title field
+                    setContent(""); // Clear content field
+                    setPriority("medium"); // Reset priority to medium
+                    getTickets();
+                } else {
+                    alert("Failed to create ticket.");
+                }
             })
             .catch((error) => alert(error));
     };
