@@ -1,20 +1,17 @@
-/* Container for the whole page */
 div {
   font-family: Arial, sans-serif;
 }
 
-/* Styles for the bugs section */
-.bugs-section {
+.tickets-section {
   margin-bottom: 2rem;
 }
 
-.bugs-section h2 {
+.tickets-section h2 {
   color: #333;
   font-size: 24px;
 }
 
-/* Styles for individual bugs - assuming your Bug component has some container element */
-.bug {
+.ticket {
   background-color: #f9f9f9;
   border-left: 5px solid #007bff;
   margin: 10px 0;
@@ -22,7 +19,6 @@ div {
   border-radius: 5px;
 }
 
-/* Styles for the form section */
 form {
   background-color: #fff;
   padding: 20px;

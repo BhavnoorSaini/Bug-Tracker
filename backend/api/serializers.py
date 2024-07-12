@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Bug
+from .models import Ticket
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -15,8 +15,8 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
-class BugSerializer(serializers.ModelSerializer):
+class TicketSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Bug
+        model = Ticket
         fields = ["id", "title", "content", "created_at", "author", "priority"]
         extra_kwargs = {"author": {"read_only": True}}

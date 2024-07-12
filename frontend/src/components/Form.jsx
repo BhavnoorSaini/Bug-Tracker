@@ -21,7 +21,7 @@ function Form({ route, method }) {
                 password,
                 priority: method !== "login" && method !== "register" ? priority : undefined,
             });
-            console.log(response.data); // Log the response data for debugging
+            console.log(response.data);
             localStorage.setItem(ACCESS_TOKEN, response.data.access);
             localStorage.setItem(REFRESH_TOKEN, response.data.refresh);
             navigate("/"); // Redirect to the dashboard or another page

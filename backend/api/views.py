@@ -1,18 +1,18 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics
-from .serializers import UserSerializer, BugSerializer
+from .serializers import UserSerializer, TicketSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from .models import Bug
+from .models import Ticket
 
 
-class BugListCreate(generics.ListCreateAPIView):
-    serializer_class = BugSerializer
+class TicketListCreate(generics.ListCreateAPIView):
+    serializer_class = TicketSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         user = self.request.user
-        return Bug.objects.filter(author=user)
+        return Ticket.objects.filter(author=user)
 
     def perform_create(self, serializer):
         if serializer.is_valid():
@@ -21,13 +21,13 @@ class BugListCreate(generics.ListCreateAPIView):
             print(serializer.errors)
 
 
-class BugDelete(generics.DestroyAPIView):
-    serializer_class = BugSerializer
+class TicketDelete(generics.DestroyAPIView):
+    serializer_class = TicketSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         user = self.request.user
-        return Bug.objects.filter(author=user)
+        return Ticket.objects.filter(author=user)
 
 
 class CreateUserView(generics.CreateAPIView):
