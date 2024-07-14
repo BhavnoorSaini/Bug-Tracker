@@ -9,7 +9,7 @@ function Register() {
                 <h1>Bug Tracker</h1>
             </header>
                 <label htmlFor="login" className="title-label">Register</label>
-                <Form route="/api/register/" method="register" />
+                <Form route="/api/user/register/" method="register" />
             <footer className="footer">
                 <p>&copy; 2024 Bug Tracker</p>
             </footer>
