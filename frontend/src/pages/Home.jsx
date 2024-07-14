@@ -9,10 +9,12 @@ function Home() {
     const [content, setContent] = useState("");
     const [priority, setPriority] = useState("medium");
     const [tickets, setTickets] = useState([]);
+    const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
         getTickets();
+        getUserInfo();
     }, []);
 
     const handleLogout = () => {
@@ -23,6 +25,12 @@ function Home() {
     const getTickets = () => {
         api.get("/api/tickets/")
             .then((res) => setTickets(res.data))
+            .catch((err) => alert(err));
+    };
+
+    const getUserInfo = () => {
+        api.get("/api/user-info/")
+            .then((res) => setIsAdmin(res.data.is_admin))
             .catch((err) => alert(err));
     };
 
@@ -57,6 +65,7 @@ function Home() {
         <div className="home-container">
             <header className="header">
                 <h1>Bug Tracker</h1>
+                {isAdmin && <p>Logged in as admin</p>}
             </header>
             <div className="form-container">
                 <h2>Create a Ticket</h2>
