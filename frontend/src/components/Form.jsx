@@ -9,6 +9,7 @@ function Form({ route, method }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [priority, setPriority] = useState("");
+    const [isAdmin, setIsAdmin] = useState(false);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -20,13 +21,14 @@ function Form({ route, method }) {
                 username,
                 password,
                 priority: method !== "login" && method !== "register" ? priority : undefined,
+                is_admin: method === "register" ? isAdmin : undefined,
             });
             console.log(response.data);
             localStorage.setItem(ACCESS_TOKEN, response.data.access);
             localStorage.setItem(REFRESH_TOKEN, response.data.refresh);
             navigate("/"); // Redirect to the dashboard or another page
         } catch (error) {
-            console.error("Login failed:", error);
+            console.error("Registration failed:", error);
         } finally {
             setLoading(false);
         }
@@ -56,6 +58,16 @@ function Form({ route, method }) {
                     onChange={(e) => setPriority(e.target.value)}
                     placeholder="Priority"
                 />
+            )}
+            {method === "register" && (
+                <label>
+                    <input
+                        type="checkbox"
+                        checked={isAdmin}
+                        onChange={(e) => setIsAdmin(e.target.checked)}
+                    />
+                    Register as Admin
+                </label>
             )}
             <button type="submit" className="form-button">
                 {loading ? <LoadingIndicator /> : "Submit"}

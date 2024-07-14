@@ -4,14 +4,20 @@ from .models import Ticket
 
 
 class UserSerializer(serializers.ModelSerializer):
+    is_admin = serializers.BooleanField(write_only=True, default=False)
+
     class Meta:
         model = User
-        fields = ["id", "username", "password"]
+        fields = ["id", "username", "password", "is_admin"]
         extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
-        print(validated_data)
+        is_admin = validated_data.pop('is_admin', False)
         user = User.objects.create_user(**validated_data)
+        if is_admin:
+            user.is_staff = True
+            user.is_superuser = True
+            user.save()
         return user
 
 
