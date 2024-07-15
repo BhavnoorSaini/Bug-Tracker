@@ -99,17 +99,6 @@ function Home() {
                         <option value="medium">Medium</option>
                         <option value="high">High</option>
                     </select>
-                    {isAdmin && (
-                        <>
-                            <label htmlFor="author">Author</label>
-                            <input
-                                type="text"
-                                id="author"
-                                value={author}
-                                onChange={(e) => setAuthor(e.target.value)}
-                            />
-                        </>
-                    )}
                     <input type="submit" value="Submit" />
                 </form>
             </div>
