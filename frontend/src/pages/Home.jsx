@@ -1,10 +1,16 @@
+import { useState, useEffect } from "react";
+import api from "../api";
+import Ticket from "../components/Ticket";
+import "../styles/Home.css";
+import { useNavigate } from "react-router-dom";
+
 function Home() {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [priority, setPriority] = useState("medium");
     const [tickets, setTickets] = useState([]);
     const [isAdmin, setIsAdmin] = useState(false);
-    const [author, setAuthor] = useState(""); // New state for author
+    const [author, setAuthor] = useState(""); 
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -52,7 +58,7 @@ function Home() {
                     setTitle("");
                     setContent("");
                     setPriority("medium");
-                    setAuthor(""); // Reset author
+                    setAuthor(""); 
                     getTickets();
                 } else {
                     alert("Failed to create ticket.");
@@ -119,11 +125,5 @@ function Home() {
         </div>
     );
 }
-
-import { useState, useEffect } from "react";
-import api from "../api";
-import Ticket from "../components/Ticket";
-import "../styles/Home.css";
-import { useNavigate } from "react-router-dom";
 
 export default Home;
