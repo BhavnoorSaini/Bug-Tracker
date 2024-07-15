@@ -1,15 +1,10 @@
-import { useState, useEffect } from "react";
-import api from "../api";
-import Ticket from "../components/Ticket";
-import "../styles/Home.css";
-import { useNavigate } from "react-router-dom";
-
 function Home() {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [priority, setPriority] = useState("medium");
     const [tickets, setTickets] = useState([]);
     const [isAdmin, setIsAdmin] = useState(false);
+    const [author, setAuthor] = useState(""); // New state for author
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -46,13 +41,18 @@ function Home() {
 
     const createTicket = (e) => {
         e.preventDefault();
-        api.post("/api/tickets/", { content, title, priority })
+        const ticketData = { content, title, priority };
+        if (isAdmin && author) {
+            ticketData.author = author;
+        }
+        api.post("/api/tickets/", ticketData)
             .then((res) => {
                 if (res.status === 201) {
                     alert("Ticket created!");
                     setTitle("");
                     setContent("");
                     setPriority("medium");
+                    setAuthor(""); // Reset author
                     getTickets();
                 } else {
                     alert("Failed to create ticket.");
@@ -93,6 +93,17 @@ function Home() {
                         <option value="medium">Medium</option>
                         <option value="high">High</option>
                     </select>
+                    {isAdmin && (
+                        <>
+                            <label htmlFor="author">Author</label>
+                            <input
+                                type="text"
+                                id="author"
+                                value={author}
+                                onChange={(e) => setAuthor(e.target.value)}
+                            />
+                        </>
+                    )}
                     <input type="submit" value="Submit" />
                 </form>
             </div>
@@ -108,5 +119,11 @@ function Home() {
         </div>
     );
 }
+
+import { useState, useEffect } from "react";
+import api from "../api";
+import Ticket from "../components/Ticket";
+import "../styles/Home.css";
+import { useNavigate } from "react-router-dom";
 
 export default Home;

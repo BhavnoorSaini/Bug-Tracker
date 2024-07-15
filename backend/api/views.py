@@ -24,14 +24,18 @@ class TicketListCreate(generics.ListCreateAPIView):
 
     def get_queryset(self):
         user = self.request.user
+        if user.is_staff:
+            return Ticket.objects.all()
         return Ticket.objects.filter(author=user)
 
     def perform_create(self, serializer):
         if serializer.is_valid():
-            serializer.save(author=self.request.user)
+            if self.request.user.is_staff and 'author' in serializer.validated_data:
+                serializer.save()
+            else:
+                serializer.save(author=self.request.user)
         else:
             print(serializer.errors)
-
 
 class TicketDelete(generics.DestroyAPIView):
     serializer_class = TicketSerializer
@@ -39,6 +43,8 @@ class TicketDelete(generics.DestroyAPIView):
 
     def get_queryset(self):
         user = self.request.user
+        if user.is_staff:
+            return Ticket.objects.all()
         return Ticket.objects.filter(author=user)
 
 
