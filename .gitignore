@@ -1,1 +1,35 @@
-env/
+# Environment files
+.env
+backend/.env
+frontend/.env
+
+# Compiled Python files
+__pycache__/
+*.pyc
+
+# Database files
+backend/db.sqlite3
+
+# Node modules
+node_modules/
+
+# Build directories
+dist/
+dist-ssr/
+
+# IDE and editor directories
+.vscode/
+.idea/
+
+# Log files
+logs/
+*.log
+
+# Other
+.DS_Store
+*.local
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
