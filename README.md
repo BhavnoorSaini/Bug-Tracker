@@ -71,7 +71,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 - Tech With Tim - Initial webpage and project setup
 
-### Version 1.0.0 (2024-02-02)
+### Version 1.0.0 (2024-07)
 
 - Initial release
 
