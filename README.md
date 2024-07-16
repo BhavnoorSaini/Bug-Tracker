@@ -51,7 +51,7 @@ python manage.py runserver
 
 ## Configuration
 
-The application settings can be configured by editing the 'settings.py' file in the 'backend/backend' directory. You can adjust settings such as database configurations, installed apps, middleware, and more. Also, you can adjust the api settings and behaviors in the 'backend/api' directory. 
+The application settings can be configured by editing the `settings.py` file in the `backend/backend` directory. You can adjust settings such as database configurations, installed apps, middleware, and more. Also, you can adjust the api settings and behaviors in the `backend/api` directory. 
 
 ## Contributing
 
